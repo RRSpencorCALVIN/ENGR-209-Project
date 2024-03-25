@@ -1,0 +1,46 @@
+from math import exp, sqrt
+
+def calculate_k(T,p):
+    # K is a function of temperature (T) and pressure (p)
+    #Computing K
+    # K = 0.8 * (Exp^(15.5408 - 14852.6/T)) / p))
+    return ((0.8 * exp(15.5408 -14852.6/T)) / p)
+ 
+def solve_quadratic(a, b, c):
+     #Find the discriminant
+     discriminant = (b**2) - (4*a*c)
+     # Check if the discriminant is positive or zero ( real number solution)
+     if discriminant >=0:
+         #Calculate the two solution of the quadratic solution
+         x1 = (-b + sqrt(discriminant)) / (2*a)
+         x2 = (-b-sqrt(discriminant))/(2*a)
+         return x1,x2
+     else:
+         #no real number solution
+        return None
+    
+def find_x(T,p,R,delta):
+    #Calculate K based on T and P
+    k = calculate_k(T,p)
+    
+    #calculate the coefficients a, b and c of the quadratic equation
+    a = (delta * k) - ((8/9)*k) - (8/9) + ((25/9)*delta) - (2*(delta**2))
+    b = (-delta *k) - ((2/9) *k) - (R*k) + (1/9) + ((2/9)*delta)
+    c = (10/9)*k + R*k
+    
+
+    
+    #Solve the quadratic equation and return the result
+    return solve_quadratic(a,b,c)
+for x in range (150):
+    T = 800
+    result = find_x(T,1.1,9,0.03)
+    T= T + 1
+    print(result)
+    
+    
+    
+
+    
+
+    
